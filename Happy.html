@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quà Tặng 8/3 - Bấm Để Xem</title>
+    <style>
+        :root {
+            --pink-main: #f60d0d;
+            --pink-light: #ffffff;
+            --bg-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Hiệu ứng trái tim nền */
+        .bg-heart {
+            position: fixed;
+            color: rgba(255, 77, 109, 0.4);
+            font-size: 20px;
+            z-index: -1;
+            top: 100%; /* Bắt đầu từ dưới cùng */
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .card-container {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative; /* RẤT QUAN TRỌNG ĐỂ ĐỊNH VỊ 2 HÌNH ĐỘNG */
+            z-index: 10;
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* [THÊM MỚI] CSS cho 2 hình động vệ sĩ cute 2 bên */
+        .sticker-left, .sticker-right {
+            position: absolute; /* Giúp hình 'bay' tự do so với thiệp */
+            width: 250px;         /* Độ lớn của hình động */
+            height: auto;
+            bottom: 250px;      /* Căn chỉnh độ cao (nằm ở đáy thiệp) */
+            z-index: -1;        /* Nằm dưới thiệp để không che nội dung */  
+            animation: fadeInSticker 1s ease-in-out; /* Hiệu ứng hiện dần */
+        }
+
+        .sticker-left {
+            left: -400px;        /* Đẩy sang trái bên ngoài thiệp */
+        }
+
+        .sticker-right {
+            right: -400px;       /* Đẩy sang phải bên ngoài thiệp */
+            /* transform: scaleX(-1); Lật ngược hình lại để đối xứng */
+        }
+
+        /* Hiệu ứng hiện dần cho sticker */
+        @keyframes fadeInSticker {
+            from { opacity: 0; transform: translateY(20px) scale(0.5) scaleX(1); }
+            to { opacity: 1; transform: translateY(0) scale(1) scaleX(1); }
+        }
+
+        /* Ẩn hình động trên màn hình điện thoại (dưới 550px) để không bị tràn */
+        @media (max-width: 550px) {
+            .sticker-left, .sticker-right {
+                display: none;
+            }
+        }
+        /* ------------------------------------------------------------------- */
+
+        .photo-frame {
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 5px solid var(--pink-light);
+            background: #fdf2f4;
+            position: relative; /* Cần thiết để object-fit hoạt động đúng trong vài case */
+            z-index: 5;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; 
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .photo-frame img.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .message-box {
+            min-height: 60px;
+            margin-bottom: 20px;
+            color: #d90429;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .btn-next {
+            background-color: var(--pink-main);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn-next:hover {
+            background-color: #ef233c;
+            transform: translateY(-2px);
+        }
+
+        .counter {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: var(--pink-main);
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        #final-screen {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="card-container" id="main-card">
+        
+        <img src="https://f.hoatieu.vn/data/image/2021/03/05/anh-dong-8-3-6.gif" class="sticker-left" alt="cute panda left">
+        <img src="https://f.hoatieu.vn/data/image/2021/03/05/anh-dong-8-3-6.gif" class="sticker-right" alt="cute panda right">
+        <h2 id="title" style="color: #ff4d6d;">Dành cho người đặc biệt...</h2>
+        
+        <div class="photo-frame" id="gallery">
+            <img src="D:\AnhAoDai\1.jpg" class="active" data-msg="Chúc một nửa thế giới còn lại của nhà tu hú luôn rạng rỡ!">
+            <img src="D:\AnhAoDai\2.jpg" data-msg="Mỗi ngày đều là một niềm vui nhé.">
+            <img src="D:\AnhAoDai\3.jpg" data-msg="Xinh đẹp như những đóa hoa.">
+            <img src="D:\AnhAoDai\4.jpg" data-msg="Cảm ơn vì đã luôn tuyệt vời.">
+            <img src="D:\AnhAoDai\5.jpg" data-msg="Hãy luôn tự tin là chính mình!">
+            <img src="D:\AnhAoDai\6.jpg" data-msg="Thế giới này đẹp hơn nhờ có tu hú cái.">
+            <img src="D:\AnhAoDai\7.jpg" data-msg="Tận hưởng ngày 8/3 thật trọn vẹn.">
+            <img src="D:\AnhAoDai\8.jpg" data-msg="Vượt cạn, vượt bão thành công.">
+            <img src="D:\AnhAoDai\9.jpg" data-msg="Mong mọi điều tốt lành đến với những bóng hồng nhà tu hú.">
+            <img src="D:\AnhAoDai\10.jpg" data-msg="Mãi mãi mạnh mẽ, không bao giờ bỏ cuộc.">
+            <img src="D:\AnhAoDai\11.jpg" data-msg="Đạt được thật nhiều thành công trong cuộc sống nghen :3.">
+            <img src="D:\AnhAoDai\12.jpg" data-msg="Yêu thương đong đầy! ❤️">
+        </div>
+
+        <div class="message-box" id="msg-text">
+            Chúc bạn một ngày 8/3 thật ý nghĩa!
+        </div>
+
+        <button class="btn-next" onclick="nextPhoto()">Xem tiếp ➔</button>
+        
+        <div class="counter" id="photo-counter">Ảnh 1 / 12</div> </div>
+
+    <div class="card-container" id="final-screen">
+        <h1 style="color: #ff4d6d;">Chúc Mừng 8/3! 🌹</h1>
+        <p>Hy vọng những tấm hình này làm bạn mỉm cười.</p>
+        <button class="btn-next" onclick="location.reload()">Xem lại từ đầu</button>
+    </div>
+
+    <footer>
+        From Vũ with Love ❤️
+    </footer>
+
+    <script>
+        // GIỮ NGUYÊN HOÀN TOÀN JAVASCRIPT GỐC CỦA BẠN
+        let currentIndex = 0;
+        const photos = document.querySelectorAll('#gallery img');
+        const msgText = document.getElementById('msg-text');
+        const counterText = document.getElementById('photo-counter');
+        const mainCard = document.getElementById('main-card');
+        const finalScreen = document.getElementById('final-screen');
+
+        function nextPhoto() {
+            if (photos.length === 0) return; // Bảo vệ nếu không có ảnh
+
+            photos[currentIndex].classList.remove('active');
+            currentIndex++;
+
+            if (currentIndex < photos.length) {
+                photos[currentIndex].classList.add('active');
+                msgText.innerText = photos[currentIndex].getAttribute('data-msg');
+                // Sửa con số tổng ảnh thành photos.length cho chính xác
+                counterText.innerText = `Ảnh ${currentIndex + 1} / ${photos.length}`;
+            } else {
+                mainCard.style.display = 'none';
+                finalScreen.style.display = 'block';
+            }
+        }
+
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            if (!container) return; // Bảo vệ nếu chưa load xong DOM
+
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            container.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
