@@ -23,13 +23,12 @@
             overflow: hidden;
         }
 
-        /* Hiệu ứng trái tim nền */
         .bg-heart {
             position: fixed;
             color: rgba(255, 77, 109, 0.4);
             font-size: 20px;
             z-index: -1;
-            top: 100%; /* Bắt đầu từ dưới cùng */
+            top: 100%; 
             animation: float linear infinite;
         }
 
@@ -46,43 +45,37 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
-            position: relative; /* RẤT QUAN TRỌNG ĐỂ ĐỊNH VỊ 2 HÌNH ĐỘNG */
+            position: relative; 
             z-index: 10;
         }
 
-        /* ------------------------------------------------------------------- */
-        /* [THÊM MỚI] CSS cho 2 hình động vệ sĩ cute 2 bên */
         .sticker-left, .sticker-right {
-            position: absolute; /* Giúp hình 'bay' tự do so với thiệp */
-            width: 250px;         /* Độ lớn của hình động */
+            position: absolute; 
+            width: 250px;         
             height: auto;
-            bottom: 250px;      /* Căn chỉnh độ cao (nằm ở đáy thiệp) */
-            z-index: -1;        /* Nằm dưới thiệp để không che nội dung */  
-            animation: fadeInSticker 1s ease-in-out; /* Hiệu ứng hiện dần */
+            bottom: 250px;      
+            z-index: -1;       
+            animation: fadeInSticker 1s ease-in-out;
         }
 
         .sticker-left {
-            left: -400px;        /* Đẩy sang trái bên ngoài thiệp */
+            left: -400px;       
         }
 
         .sticker-right {
-            right: -400px;       /* Đẩy sang phải bên ngoài thiệp */
-            /* transform: scaleX(-1); Lật ngược hình lại để đối xứng */
+            right: -400px;       
         }
 
-        /* Hiệu ứng hiện dần cho sticker */
         @keyframes fadeInSticker {
             from { opacity: 0; transform: translateY(20px) scale(0.5) scaleX(1); }
             to { opacity: 1; transform: translateY(0) scale(1) scaleX(1); }
         }
 
-        /* Ẩn hình động trên màn hình điện thoại (dưới 550px) để không bị tràn */
         @media (max-width: 550px) {
             .sticker-left, .sticker-right {
                 display: none;
             }
         }
-        /* ------------------------------------------------------------------- */
 
         .photo-frame {
             width: 100%;
@@ -92,7 +85,7 @@
             margin-bottom: 20px;
             border: 5px solid var(--pink-light);
             background: #fdf2f4;
-            position: relative; /* Cần thiết để object-fit hoạt động đúng trong vài case */
+            position: relative; 
             z-index: 5;
         }
 
@@ -196,11 +189,10 @@
     </div>
 
     <footer>
-        From Vũ with Love ❤️
+        From Tu Hú Đực with Love ❤️
     </footer>
 
     <script>
-        // GIỮ NGUYÊN HOÀN TOÀN JAVASCRIPT GỐC CỦA BẠN
         let currentIndex = 0;
         const photos = document.querySelectorAll('#gallery img');
         const msgText = document.getElementById('msg-text');
@@ -209,7 +201,7 @@
         const finalScreen = document.getElementById('final-screen');
 
         function nextPhoto() {
-            if (photos.length === 0) return; // Bảo vệ nếu không có ảnh
+            if (photos.length === 0) return; 
 
             photos[currentIndex].classList.remove('active');
             currentIndex++;
@@ -217,7 +209,6 @@
             if (currentIndex < photos.length) {
                 photos[currentIndex].classList.add('active');
                 msgText.innerText = photos[currentIndex].getAttribute('data-msg');
-                // Sửa con số tổng ảnh thành photos.length cho chính xác
                 counterText.innerText = `Ảnh ${currentIndex + 1} / ${photos.length}`;
             } else {
                 mainCard.style.display = 'none';
@@ -227,7 +218,7 @@
 
         function createHeart() {
             const container = document.getElementById('hearts-container');
-            if (!container) return; // Bảo vệ nếu chưa load xong DOM
+            if (!container) return; 
 
             const heart = document.createElement('div');
             heart.classList.add('bg-heart');
@@ -246,4 +237,5 @@
     </script>
 </body>
 </html>
+
 
